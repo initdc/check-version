@@ -1,9 +1,10 @@
 import got from 'got'
+import { buildSchema } from 'graphql';
 
 export enum Mode {
   json = 'json',
   regexp = 'regexp',
-  full = 'full'
+  text = 'text'
 }
 
 export interface Options {
@@ -43,7 +44,7 @@ export async function fetchURL(
       break
     case Mode.regexp:
       break
-    case Mode.full:
+    case Mode.text:
       break
     default:
       console.log('Wrong Mode set')
