@@ -1,5 +1,5 @@
 import got from 'got'
-import { buildSchema } from 'graphql';
+import {buildSchema} from 'graphql'
 
 export enum Mode {
   json = 'json',

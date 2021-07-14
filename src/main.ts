@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import {wait} from './wait'
 import {fetchURL} from './fetch'
-import {queryType,queryObjType} from './array'
+import {queryType, queryObjType} from './array'
 
 async function run(): Promise<void> {
   try {
@@ -19,10 +19,10 @@ async function run(): Promise<void> {
   try {
     const query = [['data', ['server', ['version']]]]
     // @ts-ignore
-    const entries = new Map(query);
-    const obj = Object.fromEntries(entries);
+    const entries = new Map(query)
+    const obj = Object.fromEntries(entries)
 
-    console.log(obj.data);
+    console.log(obj.data)
     console.log(queryType(obj.data))
     const url = 'https://api.kodcloud.com/?app%2Fversion'
     const result = await fetchURL(url, 'json')
