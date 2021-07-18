@@ -16,16 +16,27 @@ async function run(): Promise<void> {
   } catch (error) {
     core.setFailed(error.message)
   }
-  try {
-    const query = [['data', ['server', ['version']]]]
-    // @ts-ignore
-    const entries = new Map(query)
-    const obj = Object.fromEntries(entries)
 
-    console.log(obj.data)
-    console.log(queryType(obj.data))
+  // try {
+  //   const query = [['data', ['server', ['version']]]]
+  //   // @ts-ignore
+  //   const entries = new Map(query)
+  //   const obj = Object.fromEntries(entries)
+
+  //   console.log(obj.data)
+  //   console.log(queryType(obj.data))
+  //   const url = 'https://api.kodcloud.com/?app%2Fversion'
+  //   const result = await fetchURL(url, 'json')
+  //   core.setOutput('result', result)
+  // } catch (error) {
+  //   core.setFailed(error.message)
+  // }
+
+  try {
+    const query = 'data.server.version'
+
     const url = 'https://api.kodcloud.com/?app%2Fversion'
-    const result = await fetchURL(url, 'json')
+    const result = await fetchURL(url, 'json', {json: query})
     core.setOutput('result', result)
   } catch (error) {
     core.setFailed(error.message)
