@@ -1,7 +1,6 @@
 import * as core from '@actions/core'
 import {wait} from './wait'
 import {fetchURL} from './fetch'
-import {queryType, queryObjType} from './array'
 
 async function run(): Promise<void> {
   try {
@@ -17,27 +16,30 @@ async function run(): Promise<void> {
     core.setFailed(error.message)
   }
 
-  // try {
-  //   const query = [['data', ['server', ['version']]]]
-  //   // @ts-ignore
-  //   const entries = new Map(query)
-  //   const obj = Object.fromEntries(entries)
-
-  //   console.log(obj.data)
-  //   console.log(queryType(obj.data))
-  //   const url = 'https://api.kodcloud.com/?app%2Fversion'
-  //   const result = await fetchURL(url, 'json')
-  //   core.setOutput('result', result)
-  // } catch (error) {
-  //   core.setFailed(error.message)
-  // }
-
   try {
-    const query = 'data.server.version'
+    const query = ['data.server.version', 'data.mac.version']
 
     const url = 'https://api.kodcloud.com/?app%2Fversion'
     const result = await fetchURL(url, 'json', {json: query})
     core.setOutput('result', result)
+  } catch (error) {
+    core.setFailed(error.message)
+  }
+
+  try {
+    const url = 'https://myip.biturl.top/'
+    const result = await fetchURL(url, 'full')
+    core.setOutput('result', result)
+  } catch (error) {
+    core.setFailed(error.message)
+  }
+
+  try {
+    const query = /([0-9]+\.?){4}/g
+
+    const url = 'https://myip.ipip.net/'
+    const result = await fetchURL(url, 'regexp', {regexp: query})
+    core.setOutput('result', result[0])
   } catch (error) {
     core.setFailed(error.message)
   }

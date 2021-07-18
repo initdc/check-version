@@ -34,18 +34,18 @@ export async function fetchURL(
 
     switch (mode) {
       case 'json':
-        const bodyObj = await response.body.json()
-        const result = lodashAt(bodyObj, options?.json)
-        return new Promise((resolve) => resolve(result))
+        const bodyObj = JSON.parse(response.body)
+        const result1 = lodashAt(bodyObj, options?.json)
+        return new Promise((resolve) => resolve(result1))
         break
       case 'regexp':
-        const bodyText = await response.body.text()
-        const result = regexpExec(bodyText, options?.regexp)
-        return new Promise((resolve) => resolve(result))
+        const bodyText = response.body
+        const result2 = regexpExec(String(bodyText), options?.regexp)
+        return new Promise((resolve) => resolve(result2))
         break
       case 'full':
-        const result = await response.body.text()
-        return new Promise((resolve) => resolve(result))
+        const result3 = response.body
+        return new Promise((resolve) => resolve(String(result3)))
         break
       default:
         return new Promise((resolve, reject) => reject(new Error('Wrong mode set')))

@@ -33,6 +33,9 @@ export function queryObject(object: object, keys: Array<any>, current: number, n
   return object[keys[current]];
 }
 
-export function regexpExec(str: string, regexp: RegExp): any {
+export function regexpExec(str: string, regexp: RegExp | undefined): any {
+  if ( regexp === undefined) {
+    return null
+  }
   return regexp.exec(str)
 }
