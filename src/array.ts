@@ -17,24 +17,29 @@ export function queryType(o: any): string {
 }
 
 export function queryObjType(obj: object): string {
-  if (Array.isArray(obj)){
+  if (Array.isArray(obj)) {
     return 'array'
   }
   return 'object'
 }
 
-export function queryObject(object: object, keys: Array<any>, current: number, next: number): any {
+export function queryObject(
+  object: object,
+  keys: Array<any>,
+  current: number,
+  next: number
+): any {
   // @ts-ignore
-  if (typeof object[keys[current]] === "object") {
+  if (typeof object[keys[current]] === 'object') {
     // @ts-ignore
-    return queryObject(object[keys[current]], keys, next, next + 1);
+    return queryObject(object[keys[current]], keys, next, next + 1)
   }
   // @ts-ignore
-  return object[keys[current]];
+  return object[keys[current]]
 }
 
 export function regexpExec(str: string, regexp: RegExp | undefined): any {
-  if ( regexp === undefined) {
+  if (regexp === undefined) {
     return null
   }
   return regexp.exec(str)
