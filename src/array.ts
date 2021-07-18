@@ -16,13 +16,21 @@ export function queryType(o: any): string {
   return typeof o
 }
 
-export function queryObjType(obj: object): any {
-  return Object.getPrototypeOf(obj)
+export function queryObjType(obj: object): string {
+  if (Array.isArray(obj)){
+    return 'array'
+  }
+  return 'object'
 }
 
-export function queryObject(origin: object, query: object): any {
-  if (queryObjType(query) === 'Array') {
+export function queryObject(object: object, keys: Array<any>, current: number, next: number): any {
+  // @ts-ignore
+  if (typeof object[keys[current]] === "object") {
+    // @ts-ignore
+    return queryObject(object[keys[current]], keys, next, next + 1);
   }
+  // @ts-ignore
+  return object[keys[current]];
 }
 
 export function regexpExec(str: string, regexp: RegExp): any {
