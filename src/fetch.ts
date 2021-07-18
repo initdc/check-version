@@ -31,20 +31,21 @@ export async function fetchOrigin(
   const response = await got(_url, options?.gotOptions)
   // console.log(response)
 
+  let result: any
   switch (mode) {
     case 'json':
       const bodyObj = JSON.parse(response.body)
-      const result1 = lodashAt(bodyObj, options?.json)
-      return new Promise(resolve => resolve(result1))
+      result = lodashAt(bodyObj, options?.json)
+      return new Promise(resolve => resolve(result))
       break
     case 'regexp':
       const bodyText = response.body
-      const result2 = regexpExec(String(bodyText), options?.regexp)
-      return new Promise(resolve => resolve(result2))
+      result = regexpExec(String(bodyText), options?.regexp)
+      return new Promise(resolve => resolve(result))
       break
     case 'full':
-      const result3 = response.body
-      return new Promise(resolve => resolve(String(result3)))
+      result = response.body
+      return new Promise(resolve => resolve(String(result)))
       break
     default:
       return new Promise((resolve, reject) =>
@@ -67,6 +68,11 @@ export async function fetchTarget(
       reject(new Error('Wrong url input'))
     )
   }
-  const response = await got(_url, options?.gotOptions)
-  return new Promise(resolve => resolve(response.statusCode))
+  
+  try {
+    const response = await got(_url, options?.gotOptions)
+    return new Promise(resolve => resolve(response))
+  } catch (error) {
+    return new Promise((resolve, reject) => resolve(error.response))
+  }
 }

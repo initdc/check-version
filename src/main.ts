@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import {wait} from './wait'
 import {fetchOrigin, fetchTarget} from './fetch'
+import {workFlow} from './file'
 
 async function run(): Promise<void> {
   try {
@@ -28,7 +29,17 @@ async function test(): Promise<void> {
       'https://api.github.com/repos/pliplive/kodbox/git/refs/tags/' + version
     const response = await fetchTarget(target)
 
-    core.setOutput('result', response.statusCode)
+    let result: any
+    if (response.statusCode === 200) {
+      result ='No new version'
+    } else if (response.statusCode === 404) {
+      result ='Found new version, workFlow starting...\n'
+      await workFlow(version)
+      result += 'workFlow finished'
+    }else{
+      result = 'No operation for statusCode: ' + response.statusCode
+    }
+    core.setOutput('result', result)
   } catch (error) {
     core.setFailed(error.message)
   }
