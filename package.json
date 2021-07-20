@@ -6,8 +6,8 @@
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc --skipLibCheck",
-    "test:graphql": "tsc --skipLibCheck && node ./lib/graph.js",
-    "test:main": "tsc --skipLibCheck && node ./lib/main.js",
+    "test:graphql": "node ./lib/graph.js",
+    "test:main": "node ./lib/main.js",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
