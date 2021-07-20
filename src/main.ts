@@ -31,12 +31,12 @@ async function test(): Promise<void> {
 
     let result: any
     if (response.statusCode === 200) {
-      result ='No new version'
+      result = 'No new version'
     } else if (response.statusCode === 404) {
-      result ='Found new version, workFlow starting...\n'
+      result = 'Found new version, workFlow starting...\n'
       await workFlow(version)
       result += 'workFlow finished'
-    }else{
+    } else {
       result = 'No operation for statusCode: ' + response.statusCode
     }
     core.setOutput('result', result)

@@ -68,7 +68,7 @@ export async function fetchTarget(
       reject(new Error('Wrong url input'))
     )
   }
-  
+
   try {
     const response = await got(_url, options?.gotOptions)
     return new Promise(resolve => resolve(response))
